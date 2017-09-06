@@ -49,30 +49,33 @@ def localize(colors, measurements, motions, sensor_right, p_move):
     p = [[pinit for row in range(len(colors[0]))] for col in range(len(colors))]
 
     for i in range(len(measurements)):
-        move(p, motions[i])
-        sense(p, measurements[i])
-
-    print(type(p))
+        p = move(p, motions[i], p_move)
+        p = sense(p, measurements[i], sensor_right)
 
     return p
 
 
-def move(p, motion):
-    q = []
-    # Spalten verschieben
+def move(p, motion, p_move):
+    q = [[0.0 for row in range(len(p[0]))] for col in range(len(p))]
     for i in range(len(p)):
-        r = []
         for n in range(len(p[i])):
-            r.append(p[i][(n - motion[1]) % len(p[i])])
-        q.append(r)
-    # Zeilen verschieben
-    r = []
-    for i in range(len(q[i])):
-        r.append(q[i - motion[0] % len(p[i])])
-    return r
+            q[i][n] = (p_move * p[(i - motion[0]) % len(p)][(n - motion[1]) % len(p[i])]) + p[i][n] * (1 - p_move)
 
-def sense(p, measure):
+    return q
 
+
+def sense(p, measure, sensor_right):
+    q = [[0.0 for row in range(len(p[0]))] for col in range(len(p))]
+    sum = 0
+    for i in range(len(p)):
+        for j in range(len(p[i])):
+            hit = (measure == colors[i][j])
+            q[i][j] = p[i][j] * (sensor_right * hit + (1 - sensor_right) * (1 - hit))
+            sum += q[i][j]
+    for i in range(len(p)):
+        for j in range(len(p[i])):
+            q[i][j] /= sum
+    return q
 
 
 def show(p):
@@ -110,15 +113,13 @@ def show(p):
 #     [0.0, 1.0, 0.0],
 #     [0.0, 0.0, 0.0]])
 
-# test 2
-colors = [['G', 'G', 'G'],
-          ['G', 'R', 'R'],
-          ['G', 'G', 'G']]
-measurements = ['R']
-motions = [[0, 0]]
-sensor_right = 1.0
-p_move = 1.0
-p = localize(colors, measurements, motions, sensor_right, p_move)
+colors = [['R','G','G','R','R'],
+          ['R','R','G','R','R'],
+          ['R','R','G','G','R'],
+          ['R','R','R','R','R']]
+measurements = ['G','G','G','G','G']
+motions = [[0,0],[0,1],[1,0],[1,0],[0,1]]
+p = localize(colors,measurements,motions,sensor_right = 0.7, p_move = 0.8)
 # correct_answer = (
 #    [[0.0, 0.0, 0.0],
 #     [0.0, 0.5, 0.5],
