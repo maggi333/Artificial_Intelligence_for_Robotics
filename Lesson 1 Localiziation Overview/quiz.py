@@ -99,30 +99,13 @@ def show(p):
 # motions = [[0, 0], [0, 1], [1, 0], [1, 0], [0, 1]]
 # p = localize(colors, measurements, motions, sensor_right=0.7, p_move=0.8)
 
-# test 1
-# colors = [['G', 'G', 'G'],
-#          ['G', 'R', 'G'],
-#          ['G', 'G', 'G']]
-# measurements = ['R']
-# motions = [[0,0]]
-# sensor_right = 1.0
-# p_move = 1.0
-# p = localize(colors,measurements,motions,sensor_right,p_move)
-# correct_answer = (
-#    [[0.0, 0.0, 0.0],
-#     [0.0, 1.0, 0.0],
-#     [0.0, 0.0, 0.0]])
-
-colors = [['R','G','G','R','R'],
-          ['R','R','G','R','R'],
-          ['R','R','G','G','R'],
-          ['R','R','R','R','R']]
-measurements = ['G','G','G','G','G']
-motions = [[0,0],[0,1],[1,0],[1,0],[0,1]]
-p = localize(colors,measurements,motions,sensor_right = 0.7, p_move = 0.8)
-# correct_answer = (
-#    [[0.0, 0.0, 0.0],
-#     [0.0, 0.5, 0.5],
-#     [0.0, 0.0, 0.0]])
+colors = [['G', 'G', 'G'],
+          ['G', 'R', 'R'],
+          ['G', 'G', 'G']]
+measurements = ['R', 'R']
+motions = [[0,0], [0,1]]
+sensor_right = 0.8
+p_move = 1.0
+p = localize(colors,measurements,motions,sensor_right,p_move)
 
 show(p)  # displays your answer
