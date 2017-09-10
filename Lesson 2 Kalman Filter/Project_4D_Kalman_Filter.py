@@ -20,7 +20,7 @@ class matrix:
     def zero(self, dimx, dimy):
         # check if valid dimensions
         if dimx < 1 or dimy < 1:
-            raise ValueError, "Invalid size of matrix"
+            raise ValueError("Invalid size of matrix")
         else:
             self.dimx = dimx
             self.dimy = dimy
@@ -29,7 +29,7 @@ class matrix:
     def identity(self, dim):
         # check if valid dimension
         if dim < 1:
-            raise ValueError, "Invalid size of matrix"
+            raise ValueError("Invalid size of matrix")
         else:
             self.dimx = dim
             self.dimy = dim
@@ -47,7 +47,7 @@ class matrix:
     def __add__(self, other):
         # check if correct dimensions
         if self.dimx != other.dimx or self.dimy != other.dimy:
-            raise ValueError, "Matrices must be of equal dimensions to add"
+            raise ValueError("Matrices must be of equal dimensions to add")
         else:
             # add if correct dimensions
             res = matrix([[]])
@@ -60,7 +60,7 @@ class matrix:
     def __sub__(self, other):
         # check if correct dimensions
         if self.dimx != other.dimx or self.dimy != other.dimy:
-            raise ValueError, "Matrices must be of equal dimensions to subtract"
+            raise ValueError("Matrices must be of equal dimensions to subtract")
         else:
             # subtract if correct dimensions
             res = matrix([[]])
@@ -73,7 +73,7 @@ class matrix:
     def __mul__(self, other):
         # check if correct dimensions
         if self.dimy != other.dimx:
-            raise ValueError, "Matrices must be m*n and n*p to multiply"
+            raise ValueError("Matrices must be m*n and n*p to multiply")
         else:
             # subtract if correct dimensions
             res = matrix([[]])
@@ -108,7 +108,7 @@ class matrix:
                 res.value[i][i] = 0.0
             else:
                 if d < 0.0:
-                    raise ValueError, "Matrix not positive-definite"
+                    raise ValueError("Matrix not positive-definite")
                 res.value[i][i] = sqrt(d)
             for j in range(i + 1, self.dimx):
                 S = sum([res.value[k][i] * res.value[k][j] for k in range(self.dimx)])
@@ -157,19 +157,13 @@ def filter(x, P):
         K = P * H.transpose() * S.inverse()
         x = x + (K * y)
         P = (I - (K * H)) * P
-
-    print
-    'x= '
-    x.show()
-    print
-    'P= '
-    P.show()
+        print('x = ', x)
+        print('p = ', P)
 
 
 ########################################
 
-print
-"### 4-dimensional example ###"
+print("### 4-dimensional example ###")
 
 measurements = [[5., 10.], [6., 8.], [7., 6.], [8., 4.], [9., 2.], [10., 0.]]
 initial_xy = [4., 12.]
