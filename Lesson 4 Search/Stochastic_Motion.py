@@ -1,4 +1,4 @@
-# --------------
+# TODO
 # USER INSTRUCTIONS
 #
 # Write a function called stochastic_value that
